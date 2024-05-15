@@ -117,7 +117,10 @@ pub fn get_prompt(context: Context) -> String {
     );
 
     let module_strings = root_module.ansi_strings_for_width(Some(context.width));
-    if config.add_newline && context.target != Target::Continuation {
+    if config.add_newline
+        && context.target != Target::Continuation
+        && context.properties.status_code.is_some()
+    {
         // continuation prompts normally do not include newlines, but they can
         writeln!(buf).unwrap();
     }
